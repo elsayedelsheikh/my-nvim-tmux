@@ -68,7 +68,7 @@ map("n", "<Leader>q", "<cmd>BufDel<CR>", { desc = "Close buffer" })
 map("n", "<Leader>Q", "<cmd>BufDel!<CR>", { desc = "Close buffer ignore changes" })
 
 -- Buffer line
-map("n", "<TAB>", "<C-i>") -- Keep <C-i> for jump forward
+-- map("n", "<TAB>", "<C-i>") -- Keep <C-i> for jump forward
 map("n", "L", function()
 	require("nvchad.tabufline").next()
 end, { desc = "Go to next buffer" })
@@ -78,3 +78,15 @@ end, { desc = "Go to previous buffer" })
 
 -- Plenary
 map("n", "<Leader>t", "<Plug>PlenaryTestFile", { desc = "Run plenary test on file" })
+
+-- vim-tmux-navigator (override NvChad defaults)
+map("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", { desc = "Navigate left (tmux/nvim)" })
+map("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", { desc = "Navigate down (tmux/nvim)" })
+map("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", { desc = "Navigate up (tmux/nvim)" })
+map("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>", { desc = "Navigate right (tmux/nvim)" })
+
+-- CMake
+map("n", "<Leader>cg", ":CMakeGenerate<CR>", { desc = "CMake Generate" })
+map("n", "<Leader>cb", ":CMakeBuild<CR>", { desc = "CMake Build" })
+map("n", "<Leader>cq", ":CMakeClose<CR>", { desc = "CMake Close" })
+map("n", "<Leader>cc", ":CMakeClean<CR>", { desc = "CMake Clean" })

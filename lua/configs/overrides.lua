@@ -10,7 +10,6 @@ M.treesitter = {
 		"c",
 		"cpp",
 		"python",
-		"go",
 		"yaml",
 		"json",
 		"make",
@@ -21,8 +20,11 @@ M.treesitter = {
 		enable = true,
 		use_languagetree = true,
 	},
-
 	indent = { enable = true },
+	-- Add folding support
+	fold = {
+		enable = true,
+	},
 }
 
 M.mason = {
@@ -54,18 +56,6 @@ M.mason = {
 		-- python
 		"pyright",
 		"pylint",
-
-		-- go
-		"delve",
-		"go-debug-adapter",
-		"gofumpt",
-		"goimports",
-		"goimports-reviser",
-		"golangci-lint",
-		"golangci-lint-langserver",
-		"golines",
-		"gomodifytags",
-		"gopls",
 	},
 }
 
@@ -137,7 +127,6 @@ M.conform = {
 		lua = { "stylua" },
 		c = { "clang-format" },
 		cpp = { "clang-format" },
-		go = { "gofumpt", "goimports-reviser", "golines" },
 		python = { "isort", "black" },
 	},
 

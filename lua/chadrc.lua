@@ -3,8 +3,8 @@ local M = {}
 
 local overrides = require("configs.overrides")
 
-M.ui = {
-	theme = "onedark",
+M.base46 = {
+	theme = "gruvbox",
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },

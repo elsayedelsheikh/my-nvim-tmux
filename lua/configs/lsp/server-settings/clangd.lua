@@ -41,8 +41,8 @@ return {
 
 	on_attach = function(client, _)
 		-- 1. Disable built-in formatting (use conform instead)
-		client.server_capabilities.documentFormattingProvider = false
-		client.server_capabilities.documentRangeFormattingProvider = false
+		client.server_capabilities.documentFormattingProvider = true
+		client.server_capabilities.documentRangeFormattingProvider = true
 
 		-- 2. Setup Clangd Extensions
 		require("clangd_extensions").setup({

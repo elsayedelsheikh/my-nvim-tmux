@@ -53,11 +53,11 @@ return {
 		end,
 	},
 
-	{
-		"stevearc/conform.nvim",
-		event = "BufWritePre", -- required for format on save
-		opts = overrides.conform,
-	},
+	-- {
+	-- 	"stevearc/conform.nvim",
+	-- 	event = "BufWritePre", -- required for format on save
+	-- 	opts = overrides.conform,
+	-- },
 
 	-- Additional plugins
 
@@ -101,14 +101,6 @@ return {
 	},
 
 	{
-		"zbirenbaum/copilot.lua",
-		event = "InsertEnter",
-		config = function()
-			require("copilot").setup(require("configs.copilot"))
-		end,
-	},
-
-	{
 		"leoluz/nvim-dap-go",
 		ft = "go",
 		dependencies = "mfussenegger/nvim-dap",
@@ -121,6 +113,50 @@ return {
 		-- Setup happens in configs/server-settings/clangd.lua
 		"p00f/clangd_extensions.nvim",
 		lazy = true,
+	},
+
+
+  {
+    "jghauser/fold-cycle.nvim",
+		lazy = false,
+    keys = {
+      { "<Tab>", function() return require('fold-cycle').open() end, expr = true, desc = "Fold: open" },
+      { "<S-Tab>", function() return require('fold-cycle').close() end, expr = true, desc = "Fold: close" },
+    },
+    opts = {},
+  },
+
+  {
+    "cdelledonne/vim-cmake",
+    ft = {"c","cpp","cmake"},
+    init = function()
+      vim.g.cmake_build_dir_location = "build"
+      vim.g.cmake_generate_options = {
+        '-DCMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG=' .. vim.fn.getcwd() .. '/Debug',
+        '-DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE=' .. vim.fn.getcwd() .. '/Release',
+      }
+    end,
+
+  },
+
+	{
+		"ErickKramer/nvim-ros2",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {
+			-- Add any custom options here
+			autocmds = true,
+			telescope = true,
+			treesitter = true,
+		},
+	},
+
+	{
+		"christoomey/vim-tmux-navigator",
+		lazy = false,
 	},
 
 	-- To make a plugin not be loaded
