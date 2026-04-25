@@ -1,0 +1,22 @@
+{
+  "env": {
+    "MAX_THINKING_TOKENS": "10000",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "haiku"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /home/sayed/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "codex@openai-codex": false
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
+  "effortLevel": "medium",
+}
