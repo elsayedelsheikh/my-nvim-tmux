@@ -18,10 +18,17 @@ local options = {
 	backup = false, -- Some servers have issues with backup files, see #649.
 	writebackup = false,
 	spell = true, -- enable spell checking
+  -- treesitter folding,
+  foldmethod = "expr",
+  foldexpr = "v:lua.vim.treesitter.foldexpr()",
+  foldlevel = 99,   -- Start with all folds open
+  foldcolumn = "1", -- Shows fold indicators on the left
 }
 
 for key, value in pairs(options) do
 	vim.opt[key] = value
 end
 
+-- Cleaner fold appearance (removes the dots/dashes)
+-- vim.opt.fillchars = { fold = " ", foldopen = "", foldsep = " ", foldclose = "" }
 vim.opt.shortmess:append("c") -- hide startup message

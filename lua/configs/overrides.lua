@@ -15,6 +15,7 @@ M.treesitter = {
 		"make",
 		"bash",
 		"markdown",
+		"xml",
 	},
 	highlight = {
 		enable = true,

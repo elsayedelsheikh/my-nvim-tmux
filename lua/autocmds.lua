@@ -1,5 +1,14 @@
 require("nvchad.autocmds")
 
+vim.filetype.add({
+	filename = {
+		["docker-compose.yml"] = "yaml.docker-compose",
+		["docker-compose.yaml"] = "yaml.docker-compose",
+		["compose.yml"] = "yaml.docker-compose",
+		["compose.yaml"] = "yaml.docker-compose",
+	},
+})
+
 -- highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -37,3 +46,38 @@ for _, plugin in pairs(enable_providers) do
 end
 
 vim.g.python3_host_prog = "/bin/python3"
+
+-- Hot-reload: pick up file changes made outside Neovim (e.g. by Claude Code)
+local reload_group = vim.api.nvim_create_augroup("HotReload", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
+	group = reload_group,
+	desc = "Reload buffers changed outside Neovim",
+	callback = function()
+		if vim.fn.getcmdwintype() == "" then
+			vim.cmd("checktime")
+		end
+	end,
+})
+
+-- Refresh diffview file panel when .git/index changes (tracks staged/unstaged state)
+vim.api.nvim_create_autocmd("VimEnter", {
+	group = reload_group,
+	once = true,
+	desc = "Watch .git/index and refresh diffview panel on changes",
+	callback = function()
+		local git_index = vim.fn.getcwd() .. "/.git/index"
+		if vim.fn.filereadable(git_index) ~= 1 then
+			return
+		end
+		local uv = vim.uv or vim.loop
+		local w = uv.new_fs_event()
+		w:start(git_index, {}, vim.schedule_wrap(function()
+			local ok, lib = pcall(require, "diffview.lib")
+			if not ok then return end
+			local view = lib.get_current_view()
+			if view and view.update_files then
+				view:update_files()
+			end
+		end))
+	end,
+})

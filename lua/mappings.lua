@@ -18,6 +18,7 @@ map(
 	{ desc = "Find all files" }
 )
 map("n", "<Leader>pg", "<cmd>Telescope live_grep<CR>", { desc = "Grep files" })
+map("n", "<Leader>fs", "<cmd>Telescope grep_string<CR>", { desc = "Grep word under cursor" })
 map("n", "<Leader>pb", "<cmd>Telescope buffers<CR>", { desc = "Find buffers" })
 map("n", "<Leader>ph", "<cmd>Telescope help_tags<CR>", { desc = "Help page" })
 map("n", "<Leader>po", "<cmd>Telescope oldfiles<CR>", { desc = "Find oldfiles" })
@@ -57,6 +58,7 @@ map("n", "<Leader>dF", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Go t
 map("n", "<Leader>df", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "Go to next diagnostic" })
 map("n", "<Leader>dt", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope diagnostics" })
 map("n", "<Leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "Lsp code action" })
+map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { desc = "Search Document Symbols" })
 
 -- Conform
 map("n", "<C-f>", function()
@@ -84,6 +86,17 @@ map("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", { desc = "Navigate left (tmux/nvi
 map("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", { desc = "Navigate down (tmux/nvim)" })
 map("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", { desc = "Navigate up (tmux/nvim)" })
 map("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>", { desc = "Navigate right (tmux/nvim)" })
+
+-- Diffview (git diff / Claude Code live review)
+map("n", "<Leader>gd", function()
+	local ok, lib = pcall(require, "diffview.lib")
+	if ok and lib.get_current_view() then
+		vim.cmd("DiffviewClose")
+	else
+		vim.cmd("DiffviewOpen")
+	end
+end, { desc = "Toggle Diffview" })
+map("n", "<Leader>gh", "<cmd>DiffviewFileHistory %<CR>", { desc = "Diffview file history" })
 
 -- CMake
 map("n", "<Leader>cg", ":CMakeGenerate<CR>", { desc = "CMake Generate" })

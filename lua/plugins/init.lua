@@ -126,6 +126,13 @@ return {
     opts = {},
   },
 
+	-- Git diff viewer 
+	{
+		"sindrets/diffview.nvim",
+		cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+
   {
     "cdelledonne/vim-cmake",
     ft = {"c","cpp","cmake"},
@@ -158,6 +165,27 @@ return {
 		"christoomey/vim-tmux-navigator",
 		lazy = false,
 	},
+
+  {
+    "rhysd/clever-f.vim",
+    lazy = false,
+  },
+
+	{
+		"mfussenegger/nvim-lint",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			require("configs.lint")
+		end,
+	},
+
+  {
+    "windwp/nvim-ts-autotag",
+    ft = { "html", "xml", "javascriptreact", "typescriptreact" },
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
 
 	-- To make a plugin not be loaded
 	-- {
