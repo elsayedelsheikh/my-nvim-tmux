@@ -103,3 +103,24 @@ map("n", "<Leader>cg", ":CMakeGenerate<CR>", { desc = "CMake Generate" })
 map("n", "<Leader>cb", ":CMakeBuild<CR>", { desc = "CMake Build" })
 map("n", "<Leader>cq", ":CMakeClose<CR>", { desc = "CMake Close" })
 map("n", "<Leader>cc", ":CMakeClean<CR>", { desc = "CMake Clean" })
+
+-- Transparency toggle
+local transparent_highlights = {
+  "Normal", "NormalFloat", "NormalNC", "SignColumn",
+  "NvimTreeNormal", "NvimTreeNormalNC",
+  "TelescopeNormal", "TelescopeBorder",
+  "LineNr", "CursorLineNr",
+  "EndOfBuffer",
+}
+
+map("n", "<Leader>T", function()
+  if vim.g.transparent_bg then
+    require("base46").load_all_highlights()
+    vim.g.transparent_bg = false
+  else
+    for _, hl in ipairs(transparent_highlights) do
+      vim.api.nvim_set_hl(0, hl, { bg = "NONE", ctermbg = "NONE" })
+    end
+    vim.g.transparent_bg = true
+  end
+end, { desc = "Toggle transparent background" })
