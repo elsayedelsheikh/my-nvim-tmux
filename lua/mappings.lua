@@ -109,18 +109,30 @@ local transparent_highlights = {
   "Normal", "NormalFloat", "NormalNC", "SignColumn",
   "NvimTreeNormal", "NvimTreeNormalNC",
   "TelescopeNormal", "TelescopeBorder",
-  "LineNr", "CursorLineNr",
-  "EndOfBuffer",
+  "LineNr", "CursorLineNr", "EndOfBuffer",
 }
 
-map("n", "<Leader>T", function()
-  if vim.g.transparent_bg then
-    require("base46").load_all_highlights()
-    vim.g.transparent_bg = false
-  else
+local state_file = vim.fn.stdpath("data") .. "/transparent_state"
+
+local function set_transparency(enabled)
+  if enabled then
     for _, hl in ipairs(transparent_highlights) do
       vim.api.nvim_set_hl(0, hl, { bg = "NONE", ctermbg = "NONE" })
     end
     vim.g.transparent_bg = true
+    vim.fn.writefile({ "1" }, state_file)
+  else
+    require("base46").load_all_highlights()
+    vim.g.transparent_bg = false
+    vim.fn.delete(state_file)
   end
+end
+
+map("n", "<Leader>T", function()
+  set_transparency(not vim.g.transparent_bg)
 end, { desc = "Toggle transparent background" })
+
+-- Restore transparency state from previous session
+if vim.fn.filereadable(state_file) == 1 then
+  set_transparency(true)
+end
