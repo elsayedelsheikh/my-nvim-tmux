@@ -4,7 +4,8 @@ local M = {}
 local overrides = require("configs.overrides")
 
 M.base46 = {
-	theme = "gruvbox_light",
+	theme = "catppuccin",
+	transparency = true,
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },

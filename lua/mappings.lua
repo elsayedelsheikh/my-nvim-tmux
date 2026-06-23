@@ -104,35 +104,8 @@ map("n", "<Leader>cb", ":CMakeBuild<CR>", { desc = "CMake Build" })
 map("n", "<Leader>cq", ":CMakeClose<CR>", { desc = "CMake Close" })
 map("n", "<Leader>cc", ":CMakeClean<CR>", { desc = "CMake Clean" })
 
--- Transparency toggle
-local transparent_highlights = {
-  "Normal", "NormalFloat", "NormalNC", "SignColumn",
-  "NvimTreeNormal", "NvimTreeNormalNC",
-  "TelescopeNormal", "TelescopeBorder",
-  "LineNr", "CursorLineNr", "EndOfBuffer",
-}
-
-local state_file = vim.fn.stdpath("data") .. "/transparent_state"
-
-local function set_transparency(enabled)
-  if enabled then
-    for _, hl in ipairs(transparent_highlights) do
-      vim.api.nvim_set_hl(0, hl, { bg = "NONE", ctermbg = "NONE" })
-    end
-    vim.g.transparent_bg = true
-    vim.fn.writefile({ "1" }, state_file)
-  else
-    require("base46").load_all_highlights()
-    vim.g.transparent_bg = false
-    vim.fn.delete(state_file)
-  end
-end
-
+-- Transparency toggle (base46 built-in: full coverage, persists via chadrc,
+-- and survives theme switching)
 map("n", "<Leader>T", function()
-  set_transparency(not vim.g.transparent_bg)
+  require("base46").toggle_transparency()
 end, { desc = "Toggle transparent background" })
-
--- Restore transparency state from previous session
-if vim.fn.filereadable(state_file) == 1 then
-  set_transparency(true)
-end
