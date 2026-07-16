@@ -143,6 +143,9 @@ map("n", "<Leader>cb", ":CMakeBuild<CR>", { desc = "CMake Build" })
 map("n", "<Leader>cq", ":CMakeClose<CR>", { desc = "CMake Close" })
 map("n", "<Leader>cc", ":CMakeClean<CR>", { desc = "CMake Clean" })
 
+-- Toggle soft line wrap (VSCode's Alt+Z convention)
+map("n", "<A-z>", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })
+
 -- Transparency toggle (base46 built-in: full coverage, persists via chadrc,
 -- and survives theme switching)
 map("n", "<Leader>T", function()
