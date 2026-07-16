@@ -5,7 +5,6 @@ local options = {
 	cursorline = false, -- disable cursor styling
 	completeopt = { "menuone", "noselect" }, -- options for insert mode completion (for cmp plugin)
 	conceallevel = 0, -- so that `` is visible in markdown files
-	cmdheight = 2, -- number of of screen lines to use for the command line
 	relativenumber = true, -- relative numbers from line cursor is on
 	swapfile = false,
 	hlsearch = true, -- highlight all matches of previous search pattern
