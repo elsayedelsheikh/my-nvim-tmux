@@ -166,6 +166,18 @@ return {
 		lazy = false,
 	},
 
+	-- Directional split resizing across nvim splits and tmux panes
+	-- (keymaps live in mappings.lua so they win over nvchad.mappings;
+	-- submode.nvim provides the persistent resize mode on <Leader>r)
+	{
+		"mrjones2014/smart-splits.nvim",
+		lazy = false,
+		dependencies = { "pogyomo/submode.nvim" },
+		opts = {
+			default_amount = 3,
+		},
+	},
+
   {
     "rhysd/clever-f.vim",
     lazy = false,

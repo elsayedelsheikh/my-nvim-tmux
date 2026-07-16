@@ -87,6 +87,45 @@ map("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", { desc = "Navigate down (tmux/nvi
 map("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", { desc = "Navigate up (tmux/nvim)" })
 map("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>", { desc = "Navigate right (tmux/nvim)" })
 
+-- smart-splits: hold Alt+hjkl to resize, or <Leader>r for resize mode (hjkl, Esc exits)
+-- <A-h> shadows NvChad's horizontal-term toggle (still available on <leader>h)
+map("n", "<A-h>", function()
+	require("smart-splits").resize_left()
+end, { desc = "Resize split left (tmux/nvim)" })
+map("n", "<A-j>", function()
+	require("smart-splits").resize_down()
+end, { desc = "Resize split down (tmux/nvim)" })
+map("n", "<A-k>", function()
+	require("smart-splits").resize_up()
+end, { desc = "Resize split up (tmux/nvim)" })
+map("n", "<A-l>", function()
+	require("smart-splits").resize_right()
+end, { desc = "Resize split right (tmux/nvim)" })
+-- Persistent resize mode: <Leader>r enters, then bare hjkl/arrows resize until Esc/q
+require("submode").create("WinResize", {
+	mode = "n",
+	enter = "<Leader>r",
+	leave = { "<Esc>", "q", "<C-c>" },
+	hook = {
+		on_enter = function()
+			vim.notify("Resize mode: h/j/k/l or arrows to resize, Esc/q to exit")
+		end,
+		on_leave = function()
+			vim.notify("")
+		end,
+	},
+	default = function(register)
+		register("h", require("smart-splits").resize_left, { desc = "Resize left" })
+		register("j", require("smart-splits").resize_down, { desc = "Resize down" })
+		register("k", require("smart-splits").resize_up, { desc = "Resize up" })
+		register("l", require("smart-splits").resize_right, { desc = "Resize right" })
+		register("<Left>", require("smart-splits").resize_left, { desc = "Resize left" })
+		register("<Down>", require("smart-splits").resize_down, { desc = "Resize down" })
+		register("<Up>", require("smart-splits").resize_up, { desc = "Resize up" })
+		register("<Right>", require("smart-splits").resize_right, { desc = "Resize right" })
+	end,
+})
+
 -- Diffview (git diff / Claude Code live review)
 map("n", "<Leader>gd", function()
 	local ok, lib = pcall(require, "diffview.lib")
