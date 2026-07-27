@@ -1,0 +1,26 @@
+# Run 'ghostty +list-themes'
+#theme = Gruvbox Light
+theme = Catppuccin Mocha
+
+# Modern Typography
+font-family = "JetBrainsMono Nerd Font"
+
+# Cursor
+cursor-style-blink = true
+
+# Minimal UI
+#window-decoration = client
+window-padding-x = 10
+window-padding-y = 10
+window-decoration = false
+background-opacity = 0.95
+background-blur-radius = 20
+
+mouse-hide-while-typing = true
+
+# Shortcuts
+keybind = super+f=toggle_fullscreen
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+
+shell-integration = zsh
