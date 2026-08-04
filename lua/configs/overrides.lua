@@ -28,36 +28,48 @@ M.treesitter = {
 	},
 }
 
-M.mason = {
-	ensure_installed = {
-		-- lua stuff
-		"lua-language-server",
-		"stylua",
+-- Consumed by mason-tool-installer (see plugins/init.lua).
+-- NOTE: mason.nvim v2 has no `ensure_installed` option of its own, and NvChad
+-- v2.5 dropped `:MasonInstallAll`, so this list only takes effect through
+-- mason-tool-installer. Keep it in sync with the `servers` list in
+-- configs/lsp/init.lua and the linters in configs/lint.lua.
+M.mason_tools = {
+	-- lua stuff
+	"lua-language-server",
+	"stylua",
 
-		-- web dev stuff
-		"css-lsp",
-		"html-lsp",
-		"typescript-language-server",
-		"deno",
+	-- web dev stuff
+	"css-lsp",
+	"html-lsp",
+	"typescript-language-server",
+	"deno",
 
-		-- C / C++
-		"clangd",
-		"clang-format",
-		"cmake-language-server",
-		"cpplint",
-		"cpptools",
+	-- C / C++
+	"clangd",
+	"clang-format",
+	"cmake-language-server",
+	"cpplint",
+	"cpptools",
 
-		-- shell
-		"shellcheck",
-		"shellharden",
-		"bash-language-server",
-		"bash-debug-adapter",
-		"awk-language-server",
+	-- shell
+	"shellcheck",
+	"shellharden",
+	"bash-language-server",
+	"bash-debug-adapter",
+	"awk-language-server",
 
-		-- python
-		"pyright",
-		"pylint",
-	},
+	-- python
+	"pyright",
+	"pylint",
+
+	-- docker
+	"dockerfile-language-server",
+	"docker-compose-language-service",
+
+	-- xml / yaml
+	"lemminx",
+	"yaml-language-server",
+	"yamllint",
 }
 
 -- git support in nvimtree

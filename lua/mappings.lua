@@ -6,6 +6,9 @@ local map = vim.keymap.set
 map("n", ";", ":", { nowait = true, desc = "Command mode" })
 map("x", "<Leader>p", [["_dP]], { desc = "Paste without replacing clipboard" })
 map("n", "C-f", ":Format<CR>", { desc = "Format file" })
+-- :ClangdSwitchSourceHeader comes from clangd_extensions.nvim, which is loaded
+-- lazily from clangd's on_attach (configs/lsp/server-settings/clangd.lua), so
+-- the command only exists once clangd has attached to the buffer.
 map("n", "<Leader>s", ":ClangdSwitchSourceHeader<CR>", { desc = "Switch between header and source file" })
 
 -- Telescope

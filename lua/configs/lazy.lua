@@ -2,6 +2,10 @@ return {
   defaults = { lazy = true },
   install = { colorscheme = { "nvchad" } },
 
+  -- No plugin in this config requires luarocks; disabling it keeps lazy from
+  -- bootstrapping hererocks and reporting it as a :checkhealth error.
+  rocks = { enabled = false },
+
   ui = {
     icons = {
       ft = "",

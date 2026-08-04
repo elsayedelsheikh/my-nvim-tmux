@@ -9,14 +9,27 @@ return {
 	},
 
 	-- override existing NvChad's plugins
+	-- mason.nvim v2 has no `ensure_installed`, so the tool list is driven by
+	-- mason-tool-installer instead (see overrides.mason_tools).
 	{
-		"williamboman/mason.nvim",
-		opts = overrides.mason,
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		lazy = false,
+		opts = {
+			ensure_installed = overrides.mason_tools,
+			run_on_start = true,
+			start_delay = 2000,
+		},
 	},
 
 	{
 		"nvim-treesitter/nvim-treesitter",
 		opts = overrides.treesitter,
+		config = function(_, opts)
+			require("nvim-treesitter.configs").setup(opts)
+			-- Must run after nvim-treesitter registers its own directives.
+			require("configs.treesitter-compat")
+		end,
 	},
 
 	{
