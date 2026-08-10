@@ -140,14 +140,42 @@ map("n", "<Leader>gd", function()
 end, { desc = "Toggle Diffview" })
 map("n", "<Leader>gh", "<cmd>DiffviewFileHistory %<CR>", { desc = "Diffview file history" })
 
+-- Review this branch's own changes against the trunk (merge-base diff, so
+-- commits the branch is merely behind by don't show up). Mirrors what a GitLab
+-- MR shows. Trunk is origin/main.
+map("n", "<Leader>gr", function()
+	vim.cmd("DiffviewOpen origin/main...HEAD")
+end, { desc = "Diffview: review branch vs trunk" })
+-- Same merge-base review, but --imply-local puts the working-tree file on the
+-- right instead of the HEAD blob, so the diff is editable (do/dp, line edits)
+-- and the file panel can stage. Trade-off: with uncommitted changes the right
+-- pane is no longer literally HEAD, so it can show work that isn't committed.
+map("n", "<Leader>gR", function()
+	vim.cmd("DiffviewOpen origin/main...HEAD --imply-local")
+end, { desc = "Diffview: review branch vs trunk (editable)" })
+map("n", "<Leader>gH", function()
+	vim.cmd("DiffviewFileHistory --range=origin/main...HEAD")
+end, { desc = "Diffview: branch commit history" })
+
 -- CMake
 map("n", "<Leader>cg", ":CMakeGenerate<CR>", { desc = "CMake Generate" })
 map("n", "<Leader>cb", ":CMakeBuild<CR>", { desc = "CMake Build" })
 map("n", "<Leader>cq", ":CMakeClose<CR>", { desc = "CMake Close" })
 map("n", "<Leader>cc", ":CMakeClean<CR>", { desc = "CMake Clean" })
 
--- Toggle soft line wrap (VSCode's Alt+Z convention)
-map("n", "<A-z>", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })
+-- Toggle soft line wrap (VSCode's Alt+Z convention). Applies to every window in
+-- the current tab so both panes of a diff flip together; the current window
+-- decides the new state. Diff windows also need 'linebreak' off-by-default
+-- behaviour left alone, so only 'wrap' is touched.
+map("n", "<A-z>", function()
+	local wrap = not vim.wo.wrap
+	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+		if vim.api.nvim_win_get_config(win).relative == "" then
+			vim.wo[win].wrap = wrap
+		end
+	end
+	vim.notify("wrap " .. (wrap and "on" or "off"), vim.log.levels.INFO)
+end, { desc = "Toggle line wrap (all panes in tab)" })
 
 -- Transparency toggle (base46 built-in: full coverage, persists via chadrc,
 -- and survives theme switching)
