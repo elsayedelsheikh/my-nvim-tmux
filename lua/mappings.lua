@@ -177,6 +177,15 @@ map("n", "<A-z>", function()
 	vim.notify("wrap " .. (wrap and "on" or "off"), vim.log.levels.INFO)
 end, { desc = "Toggle line wrap (all panes in tab)" })
 
+-- Shell quoting fixer. Deliberately a command rather than an entry in
+-- conform's formatters_by_ft: format_on_save (configs/overrides.lua) is global,
+-- and shellharden rewrites quoting across the entire file, which would fold
+-- large unrelated diffs into ordinary saves of existing scripts. shellcheck
+-- reports the same issues passively via nvim-lint (configs/lint.lua).
+vim.api.nvim_create_user_command("Shellharden", function()
+	require("conform").format({ formatters = { "shellharden" }, async = true, lsp_format = "never" })
+end, { desc = "Harden shell quoting in current buffer" })
+
 -- Transparency toggle (base46 built-in: full coverage, persists via chadrc,
 -- and survives theme switching)
 map("n", "<Leader>T", function()

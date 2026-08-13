@@ -21,6 +21,10 @@ lint.linters_by_ft = {
 	yaml = { "yamllint" },
 	["yaml.docker-compose"] = { "yamllint" },
 	xml = { "xmllint" },
+	-- shellcheck only reports; the matching auto-fixer is :Shellharden
+	-- (mappings.lua), kept manual so saves never rewrite a whole script.
+	sh = { "shellcheck" },
+	bash = { "shellcheck" },
 }
 
 vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
