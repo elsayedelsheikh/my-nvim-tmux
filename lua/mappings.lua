@@ -186,6 +186,14 @@ vim.api.nvim_create_user_command("Shellharden", function()
 	require("conform").format({ formatters = { "shellharden" }, async = true, lsp_format = "never" })
 end, { desc = "Harden shell quoting in current buffer" })
 
+-- CodeCompanion (local ollama chat, see configs/codecompanion.lua)
+-- <Leader>aa in visual mode sends the selection straight into a fresh chat;
+-- <Leader>ac appends the selection to the chat already open, which is the one
+-- to use when following up on a second block during the same conversation.
+map({ "n", "v" }, "<Leader>aa", "<cmd>CodeCompanionChat Toggle<CR>", { desc = "AI chat toggle" })
+map("v", "<Leader>ac", "<cmd>CodeCompanionChat Add<CR>", { desc = "AI add selection to chat" })
+map({ "n", "v" }, "<Leader>ap", "<cmd>CodeCompanionActions<CR>", { desc = "AI action palette" })
+
 -- Transparency toggle (base46 built-in: full coverage, persists via chadrc,
 -- and survives theme switching)
 map("n", "<Leader>T", function()

@@ -196,6 +196,17 @@ return {
     lazy = false,
   },
 
+	-- Ask a local ollama model about the current line / visual selection
+	{
+		"olimorris/codecompanion.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
+		cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },
+		keys = { "<Leader>aa", "<Leader>ac", "<Leader>ap" },
+		config = function()
+			require("configs.codecompanion")
+		end,
+	},
+
 	{
 		"mfussenegger/nvim-lint",
 		event = { "BufReadPre", "BufNewFile" },
