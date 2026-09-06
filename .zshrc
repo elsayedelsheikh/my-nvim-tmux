@@ -135,6 +135,15 @@ zle -N edit-command-line
 bindkey -M viins '^x^e' edit-command-line
 bindkey -M vicmd '^x^e' edit-command-line
 
+# tmux 3.4 does not forward an OSC 11 background query to the outer terminal --
+# it answers from a value cached when the client attached -- so bat's
+# auto-detection is stale inside a session and it falls back to the dark theme.
+# Ask GNOME directly instead, per invocation, and only under tmux; outside it
+# bat's own detection is live and correct.
+if [[ -n $TMUX ]]; then
+  bat() { BAT_THEME=$(theme-mode) command bat "$@"; }
+fi
+
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
 

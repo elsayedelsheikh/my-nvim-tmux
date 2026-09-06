@@ -1,0 +1,8 @@
+#!/bin/sh
+# Print "light" or "dark" for the current GNOME appearance. The counterpart to
+# theme-toggle: anything but prefer-dark is light, so a stray 'default' (what
+# Ubuntu's Settings toggle writes) reads as light rather than surprising you.
+case "$(gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null)" in
+  *prefer-dark*) echo dark ;;
+  *)             echo light ;;
+esac

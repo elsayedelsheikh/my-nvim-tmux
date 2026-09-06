@@ -1,0 +1,15 @@
+#!/bin/sh
+# Flip the GNOME appearance between light and dark. Bound to Super+T.
+#
+# Ubuntu's Settings toggle writes 'default' (= "no preference") for light, which
+# the desktop portal reports as 0 and Ghostty resolves to its *dark* theme. So
+# always write prefer-light explicitly; everything downstream then follows:
+# Ghostty picks its light theme, and bat picks --theme-light off Ghostty's
+# background colour. Anything but prefer-dark counts as light here, so a stray
+# 'default' still toggles to dark on the first press.
+key=org.gnome.desktop.interface
+case "$(gsettings get $key color-scheme)" in
+  *prefer-dark*) gsettings set $key color-scheme prefer-light ;;
+  *)             gsettings set $key color-scheme prefer-dark ;;
+esac
+gsettings get $key color-scheme
