@@ -1,0 +1,5 @@
+# bat's default --theme=auto asks the terminal for its background colour (OSC 11)
+# on every invocation and picks one of the two below, so bat follows Ghostty,
+# which follows the GNOME appearance setting. No env var, no shell restart.
+--theme-light="Catppuccin Latte"
+--theme-dark="Catppuccin Mocha"

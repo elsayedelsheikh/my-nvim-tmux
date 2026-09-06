@@ -1,25 +1,23 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# bat picks Catppuccin Latte or Mocha from the pair in ~/.config/bat/config,
-# following the GNOME appearance setting like Ghostty and delta do.
+# bat 0.25+ defaults to --theme=auto: it asks the terminal for its background
+# colour on every invocation and picks --theme-light/--theme-dark from
+# ~/.config/bat/config. Ghostty follows the GNOME appearance setting, so bat
+# follows it too -- live, in already-open shells.
 #
-# Unlike delta -- whose theme is resolved per invocation inside delta-auto --
-# this is evaluated once per shell, so an already-open shell keeps its theme
-# until restarted. Run `export BAT_THEME=$(theme-mode)` to refresh in place.
-export BAT_THEME="$(theme-mode)"
-
 # The distrobox containers ship bat 0.24 (as `batcat`), which knows neither
 # --theme-light/--theme-dark -- so it aborts on *every* invocation while reading
-# the config above -- nor the built-in Catppuccin themes. In those shells fall
-# back to a flag-free config and the closest theme 0.24 actually ships.
+# that config -- nor the built-in Catppuccin themes. In those shells fall back to
+# a flag-free config and the closest theme 0.24 actually ships. 0.24 has no
+# auto-detection either, hence the one-shot theme-mode query.
 () {
   local bat_bin
   for bat_bin in bat batcat; do
     command -v "$bat_bin" >/dev/null || continue
     if ! BAT_CONFIG_PATH=/dev/null "$bat_bin" --help 2>/dev/null | grep -q -- '--theme-light'; then
       export BAT_CONFIG_PATH="$HOME/.config/bat/config-legacy"
-      if [[ "$BAT_THEME" == light ]]; then
+      if [[ "$(theme-mode 2>/dev/null)" == light ]]; then
         export BAT_THEME="OneHalfLight"
       else
         export BAT_THEME="OneHalfDark"

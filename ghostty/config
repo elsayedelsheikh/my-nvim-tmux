@@ -1,6 +1,6 @@
 # Run 'ghostty +list-themes'
 #theme = Gruvbox Light
-theme = Catppuccin Mocha
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
 
 # Modern Typography
 font-family = "JetBrainsMono Nerd Font"
