@@ -24,6 +24,10 @@ return {
 
 	{
 		"nvim-treesitter/nvim-treesitter",
+		-- ponytail: upstream default branch moved to the `main` rewrite, which
+		-- drops `nvim-treesitter.configs`. This config (and treesitter-compat)
+		-- targets master; pin it until we migrate.
+		branch = "master",
 		opts = overrides.treesitter,
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
@@ -199,6 +203,8 @@ return {
 	-- Ask a local ollama model about the current line / visual selection
 	{
 		"olimorris/codecompanion.nvim",
+		-- ponytail: off on Dev-Machine, on everywhere else. Add hostnames to the list.
+		enabled = not vim.tbl_contains({ "Dev-Machine" }, vim.uv.os_gethostname()),
 		dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
 		cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },
 		keys = { "<Leader>aa", "<Leader>ac", "<Leader>ap" },
